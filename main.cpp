@@ -74,7 +74,7 @@ namespace Booleval
         if(tin.peek() != assignment)
             throw std::runtime_error{ std::format("'{}' expected", assignment.get_name()) };
 
-        auto _ = tin.get(); // consume "="
+        std::ignore = tin.get(); // consume "="
 
         // get value
         auto value = proposition(tin);
@@ -91,7 +91,7 @@ namespace Booleval
         auto left = conditional(tin);
         while (tin.peek() == iff)
         {
-            auto _ = tin.get();
+            std::ignore = tin.get();  // discard
             auto right = conditional(tin);
             left = left == right;
         }
@@ -104,7 +104,7 @@ namespace Booleval
 
         while (tin.peek() == implies)
         {
-            auto _ = tin.get();
+            std::ignore = tin.get();
             auto right = term(tin);
             left = !left || right;
         }
@@ -117,7 +117,7 @@ namespace Booleval
 
         while (tin.peek() == disjunction)
         {
-            auto _ = tin.get();
+            std::ignore = tin.get();
             auto right = factor(tin);
             left = left || right;
         }
@@ -129,7 +129,7 @@ namespace Booleval
         auto left = primary(tin);
         while (tin.peek() == conjunction)
         {
-            auto _ = tin.get(); // consume conjunction token
+            std::ignore = tin.get(); // consume conjunction token
             auto right = primary(tin);
             left = left && right;
         }
@@ -149,7 +149,7 @@ namespace Booleval
             }
             if (tin.peek() == assignment)
             {
-                auto _ = tin.get(); // cleanly consume the "="
+                std::ignore = tin.get(); // cleanly consume the "="
                 // TO-DO: Check if variable is const
                 if (Var& v = get_var(name); !v.readonly)
                     v.value = proposition(tin);

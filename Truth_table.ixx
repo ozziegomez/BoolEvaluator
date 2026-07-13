@@ -199,7 +199,7 @@ namespace Booleval {
 
         while (tin_.peek() == iff)
         {
-            auto _ = tin_.get();// read peeked token
+            std::ignore = tin_.get();// read peeked token
             
             auto right = conditional();
             auto newexpr = std::format("{} {} {}", left, iff.get_name(), right);
@@ -215,7 +215,7 @@ namespace Booleval {
 
         while (tin_.peek()== implies)
         {
-            auto _ = tin_.get(); // read
+            std::ignore = tin_.get(); // read
             auto right = term();
             auto newexpr = std::format("{} {} {}", left, implies.get_name(), right);
             push_back(newexpr, implies((*this)[left], (*this)[right]));
@@ -232,7 +232,7 @@ namespace Booleval {
 
         while (tin_.peek()==disjunction)
         {
-            auto _ = tin_.get();
+            std::ignore = tin_.get();
             auto right = factor();
             auto newexpr = std::format("{} {} {}", left, disjunction.get_name(), right);
             push_back(newexpr, disjunction((*this)[left], (*this)[right]));
@@ -248,7 +248,7 @@ namespace Booleval {
 
         while (tin_.peek()==conjunction)
         {
-            auto _ = tin_.get();
+            std::ignore = tin_.get();
             auto right = primary();
             auto newexpr = std::format("{} {} {}", left, conjunction.get_name(), right);
             push_back(newexpr, conjunction((*this)[left], (*this)[right]));
